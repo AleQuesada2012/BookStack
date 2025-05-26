@@ -21,8 +21,12 @@
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@lezer/generator": "^1.7.2",
+    "@types/cypress": "^0.1.6",
+    "@types/jest": "^29.5.14",
     "@types/sortablejs": "^1.15.8",
     "chokidar-cli": "^3.0",
+    "cypress": "^14.4.0",
+    "cypress-xpath": "^2.0.1",
     "esbuild": "^0.25.0",
     "eslint": "^9.21.0",
     "eslint-plugin-import": "^2.31.0",
@@ -52,12 +56,30 @@
     "@lezer/highlight": "^1.2.1",
     "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
-    "@types/jest": "^29.5.14",
     "codemirror": "^6.0.1",
     "idb-keyval": "^6.2.1",
     "markdown-it": "^14.1.0",
     "markdown-it-task-lists": "^2.1.1",
     "snabbdom": "^3.6.2",
     "sortablejs": "^1.15.6"
-  }
+  },
+  "name": "bookstack",
+  "version": "1.0.0",
+  "description": "[![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest) [![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/development/LICENSE) [![Crowdin](https://badges.crowdin.net/bookstack/localized.svg)](https://crowdin.com/project/bookstack) [![Build Status](https://github.com/BookStackApp/BookStack/workflows/test-php/badge.svg)](https://github.com/BookStackApp/BookStack/actions) [![Lint Status](https://github.com/BookStackApp/BookStack/workflows/lint-php/badge.svg)](https://github.com/BookStackApp/BookStack/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/5551731994dd22fa1f4f/maintainability)](https://codeclimate.com/github/BookStackApp/BookStack/maintainability)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleQuesada2012/BookStack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AleQuesada2012/BookStack/issues"
+  },
+  "homepage": "https://github.com/AleQuesada2012/BookStack#readme"
 }
