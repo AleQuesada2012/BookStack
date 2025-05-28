@@ -3,11 +3,13 @@
 namespace Tests\Functional;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase; 
+use \BookStack\Users\Models\User;
+// use Illuminate\Foundation\Testing\RefreshDatabase; 
+
 
 class LoginTest extends TestCase {
 
-    use RefreshDatabase;
+    // use RefreshDatabase;
 
     public function test_login_fails() {
         $response = $this->post('/login', [
@@ -22,7 +24,7 @@ class LoginTest extends TestCase {
 
     public function test_login_successfully () { 
 
-        $user = \BookStack\Users\Models\User::factory()->create([ 
+        $user = User::factory()->create([ 
             'password' => bcrypt('password123'),
         ]);
 

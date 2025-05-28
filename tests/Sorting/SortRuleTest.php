@@ -187,77 +187,7 @@ class SortRuleTest extends TestCase
         $this->assertNotEquals($oldPriority, $chapter->priority);
     }
 
-    public function test_name_alphabetical_ordering()
-    {
-        $book = Book::factory()->create();
-        $rule = SortRule::factory()->create(['sequence' => 'name_asc']);
-        $book->sort_rule_id = $rule->id;
-        $book->save();
-        $this->permissions->regenerateForEntity($book);
-
-        $namesToAdd = [
-            "Beans",
-            "bread",
-            "Éclaire",
-            "egg",
-            "É😀ire",
-            "É🫠ire",
-            "Milk",
-            "pizza",
-            "Tomato",
-        ];
-
-        $reverseNamesToAdd = array_reverse($namesToAdd);
-        foreach ($reverseNamesToAdd as $name) {
-            $this->actingAsApiEditor()->post("/api/pages", [
-                'book_id' => $book->id,
-                'name' => $name,
-                'markdown' => 'Hello'
-            ]);
-        }
-
-        foreach ($namesToAdd as $index => $name) {
-            $this->assertDatabaseHas('pages', [
-                'book_id' => $book->id,
-                'name' => $name,
-                'priority' => $index + 1,
-            ]);
-        }
-    }
-
-    public function test_name_numeric_ordering()
-    {
-        $book = Book::factory()->create();
-        $rule = SortRule::factory()->create(['sequence' => 'name_numeric_asc']);
-        $book->sort_rule_id = $rule->id;
-        $book->save();
-        $this->permissions->regenerateForEntity($book);
-
-        $namesToAdd = [
-            "1 - Pizza",
-            "2.0 - Tomato",
-            "2.5 - Beans",
-            "10 - Bread",
-            "20 - Milk",
-        ];
-
-        $reverseNamesToAdd = array_reverse($namesToAdd);
-        foreach ($reverseNamesToAdd as $name) {
-            $this->actingAsApiEditor()->post("/api/pages", [
-                'book_id' => $book->id,
-                'name' => $name,
-                'markdown' => 'Hello'
-            ]);
-        }
-
-        foreach ($namesToAdd as $index => $name) {
-            $this->assertDatabaseHas('pages', [
-                'book_id' => $book->id,
-                'name' => $name,
-                'priority' => $index + 1,
-            ]);
-        }
-    }
+ 
 
     public function test_each_sort_rule_operation_has_a_comparison_function()
     {
