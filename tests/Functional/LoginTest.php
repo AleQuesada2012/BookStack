@@ -4,12 +4,9 @@ namespace Tests\Functional;
 
 use Tests\TestCase;
 use \BookStack\Users\Models\User;
-// use Illuminate\Foundation\Testing\RefreshDatabase; 
 
 
 class LoginTest extends TestCase {
-
-    // use RefreshDatabase;
 
     public function test_login_fails() {
         $response = $this->post('/login', [

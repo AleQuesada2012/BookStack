@@ -50,4 +50,42 @@ class RegisterTest extends TestCase {
     }
 
 
+    public function test_register_with_invalid_password() {
+        setting()->put('registration-enabled', true);
+        config(['auth.method' => 'standard']);
+
+        $userData = [
+            'name' => "Joshua",
+            'email' => "matazanos@gmail.com",
+            'password' => "123",
+            'password-confirm' => "123"
+        ];
+
+        $response = $this->post('/register', $userData);
+
+        $response->assertRedirect('/');
+        $this->assertDatabaseMissing('users', ['email' => 'matazanos@gmail.com']);
+        $this->assertGuest();
+    }
+
+
+    public function test_register_with_invalid_email() {
+        setting()->put('registration-enabled', true);
+        config(['auth.method' => 'standard']);
+
+        $userData = [
+            'name' => "Memin",
+            'email' => "Hola Mundo",
+            'password' => "ReinhardVanAstrea3",
+            'password-confirm' => "ReinhardVanAstrea3"
+        ];
+
+        $response = $this->post('/register', $userData);
+
+        $response->assertRedirect('/');
+        $this->assertDatabaseMissing('users', ['email' => 'Hola Mundo']);
+        $this->assertGuest();
+    }
+
+
 }
