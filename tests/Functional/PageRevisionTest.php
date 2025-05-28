@@ -2,6 +2,7 @@
 
 namespace Tests\Functional;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Users\Models\User;
@@ -9,25 +10,34 @@ use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
 {
-    public function test_log_descriptor_returns_expected_string()
+    private function createEditorAndPage(): array
     {
-$user = \BookStack\Users\Models\User::factory()->create([
-    'name' => 'Editor',
-    'email' => 'editor@example.com',
-    'system_name' => 'editor',
-]);
-$this->actingAs($user);
+        $user = User::factory()->create([
+            'name' => 'Editor',
+            'email' => 'editor@example.com',
+            'system_name' => 'editor',
+        ]);
         $this->actingAs($user);
 
-        // Crea una página base
-        $page = Page::factory()->create();
+        $book = Book::factory()->create();
 
-        // Crea una revisión para esa página
-        $revision = PageRevision::query()->create([
+        $page = Page::factory()->create([
+            'book_id' => $book->id,
+        ]);
+
+        return [$user, $page];
+    }
+
+    public function test_log_descriptor_returns_expected_string()
+    {
+        [$user, $page] = $this->createEditorAndPage();
+
+        // Use forceFill to assign all necessary fields
+        $revision = (new PageRevision())->forceFill([
             'page_id' => $page->id,
             'name' => 'Test Revision',
             'slug' => 'test-revision',
-            'book_slug' => $page->book->slug ?? 'default-book',
+            'book_slug' => $page->book->slug,
             'created_by' => $user->id,
             'type' => 'version',
             'summary' => 'This is a test summary',
@@ -36,30 +46,24 @@ $this->actingAs($user);
             'text' => 'Heading',
             'revision_number' => 1,
         ]);
+        $revision->save();
 
-        $expected = "Revision #1 (ID: {$revision->id}) for page ID {$page->id}";
+        // Reload with relationship loaded
+        $revision->load('page');
+
+        $expected = "Revision #1 (ID: {$revision->id}) for page ID {$revision->page->id}";
         $this->assertEquals($expected, $revision->logDescriptor());
     }
 
     public function test_get_url_returns_expected_path()
     {
-$user = \BookStack\Users\Models\User::factory()->create([
-    'name' => 'Editor',
-    'email' => 'editor@example.com',
-    'system_name' => 'editor',
-]);
-$this->actingAs($user);
-        $this->actingAs($user);
+        [$user, $page] = $this->createEditorAndPage();
 
-        // Crea una página base
-        $page = Page::factory()->create();
-
-        // Crea una revisión
-        $revision = PageRevision::query()->create([
+        $revision = (new PageRevision())->forceFill([
             'page_id' => $page->id,
             'name' => 'Test Revision',
             'slug' => 'test-revision',
-            'book_slug' => $page->book->slug ?? 'default-book',
+            'book_slug' => $page->book->slug,
             'created_by' => $user->id,
             'type' => 'version',
             'summary' => 'This is a test summary',
@@ -68,10 +72,14 @@ $this->actingAs($user);
             'text' => 'Heading',
             'revision_number' => 1,
         ]);
+        $revision->save();
+
+        // Make sure related models are available
+        $revision->load('page.book');
 
         $url = $revision->getUrl();
 
         $this->assertStringContainsString("/revisions/{$revision->id}", $url);
-        $this->assertStringContainsString((string) $page->id, $url);
+$this->assertStringContainsString($page->slug, $url);
     }
 }
