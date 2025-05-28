@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use BookStack\Users\Models\User;
 
 class RegisterTest extends TestCase {
 
