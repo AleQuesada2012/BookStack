@@ -6,6 +6,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Book;
 use \BookStack\Users\Models\User;
+use \BookStack\Uploads\Attachment;
 use Tests\TestCase;
 
 class PageModelTest extends TestCase {
@@ -87,6 +88,41 @@ class PageModelTest extends TestCase {
         ]);
 
         $this->assertFalse($page->chapter->id == $chapter2->id);
+    }
+
+
+    public function test_page_has_specific_attachment() {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+
+        $page = Page::factory()->create(['created_by' => $user->id,'updated_by' => $user->id,]);
+
+        
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id, 'order' => 2,]);
+        $attachments = $page->attachments;
+
+
+        $this->assertEquals($attachment->id, $attachments->first()->id);
+    }
+
+
+    public function test_page_has_not_specific_attachment() {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+
+        $page = Page::factory()->create(['created_by' => $user->id,'updated_by' => $user->id,]);
+
+        
+        $attachment1 = Attachment::factory()->create(['uploaded_to' => $page->id, 'order' => 2,]);
+        $attachment2 = Attachment::factory()->create(['order' => 3,]);
+        $attachments = $page->attachments;
+
+
+        $this->assertFalse($attachment2->id == $attachments->first()->id);
     }
 
 }
