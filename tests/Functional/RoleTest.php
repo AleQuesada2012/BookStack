@@ -39,5 +39,47 @@ class RoleTest extends TestCase {
 
     }
 
+    public function test_new_roles_dont_have_permissions() {
+        $role = Role::factory()->create(['system_name' => 'new-role']);
+        $this->assertTrue($role->permissions->isEmpty());
+    }
+
+    public function test_role_can_be_assigned_to_user() {
+        $role = Role::factory()->create(['system_name' => 'new-role']);
+        $user = User::factory()->create();
+        $user->roles()->attach($role);
+        $this->assertTrue($user->roles->contains($role));
+    }
+
+    public function test_role_can_be_removed_from_user() {
+        $role = Role::factory()->create(['system_name' => 'new-role']);
+        $user = User::factory()->create();
+        $user->roles()->attach($role);
+        $user->roles()->detach($role);
+        $this->assertFalse($user->roles->contains($role));
+    }
+
+    public function test_role_can_be_updated() {
+        $role = Role::factory()->create(['system_name' => 'new-role']);
+        $role->display_name = 'Updated Role';
+        $role->save();
+        $this->assertEquals('Updated Role', $role->display_name);
+    }
+
+    public function test_role_can_be_deleted() {
+        $role = Role::factory()->create(['system_name' => 'new-role']);
+        $roleId = $role->id;
+        $role->delete();
+        $this->assertDatabaseMissing('roles', ['id' => $roleId]);
+    }
+
+    public function test_user_can_have_multiple_roles() {
+        $role1 = Role::factory()->create(['system_name' => 'role-one']);
+        $role2 = Role::factory()->create(['system_name' => 'role-two']);
+        $user = User::factory()->create();
+        $user->roles()->attach([$role1->id, $role2->id]);
+        $this->assertTrue($user->roles->contains($role1));
+        $this->assertTrue($user->roles->contains($role2));
+    }
 }
 
