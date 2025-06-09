@@ -6,6 +6,9 @@ use Tests\TestCase;
 use BookStack\Entities\Models\Book;
 use BookStack\Uploads\Image;
 
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('coverage:functional')]
 class HasCoverImageTest extends TestCase
 {
     public function test_entity_has_cover_image()

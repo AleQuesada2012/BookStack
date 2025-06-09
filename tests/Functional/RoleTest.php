@@ -6,7 +6,9 @@ use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Tests\TestCase;
 
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group('coverage:functional')]
 class RoleTest extends TestCase {
 
     public function test_get_specified_role_by_display_name() {

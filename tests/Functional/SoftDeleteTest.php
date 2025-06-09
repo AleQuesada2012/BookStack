@@ -8,8 +8,10 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Users\Models\User;
 
+use PHPUnit\Framework\Attributes\Group;
 
-class DeleteTest extends TestCase { 
+#[Group('coverage:functional')]
+class SoftDeleteTest extends TestCase { 
 
     public function test_soft_delete_book() {
 

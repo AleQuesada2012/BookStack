@@ -9,8 +9,9 @@ use BookStack\Users\Models\Role;
 use BookStack\Sorting\SortRule;
 use Tests\Api\TestsApi;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
-
+#[Group('coverage:functional')]
 class SortRulesTest extends TestCase {
 
     use TestsAPi;

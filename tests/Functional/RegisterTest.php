@@ -4,6 +4,9 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('coverage:functional')]
 class RegisterTest extends TestCase {
 
     public function test_register_with_registration_enabled() {

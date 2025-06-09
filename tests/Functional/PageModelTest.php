@@ -10,6 +10,9 @@ use BookStack\Uploads\Attachment;
 use BookStack\Entities\Models\PageRevision;
 use Tests\TestCase;
 
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('coverage:functional')]
 class PageModelTest extends TestCase {
 
     public function test_page_has_any_chapter() {

@@ -1,0 +1,1 @@
+docker-compose exec -e XDEBUG_MODE=coverage app ./vendor/bin/phpunit --group coverage:functional --coverage-html coverage-report

@@ -8,6 +8,9 @@ use BookStack\Entities\Models\PageRevision;
 use BookStack\Users\Models\User;
 use Tests\TestCase;
 
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('coverage:functional')]
 class PageRevisionTest extends TestCase
 {
     private function createEditorAndPage(): array

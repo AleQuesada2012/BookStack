@@ -8,7 +8,9 @@ use BookStack\Entities\Models\Book;
 use BookStack\Users\Models\User;
 use BookStack\Entities\Models\Page;
 
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group('coverage:functional')]
 class ChapterModelTest extends TestCase {
 
     public function test_get_associated_pages() {

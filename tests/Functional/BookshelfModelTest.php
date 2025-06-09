@@ -11,6 +11,9 @@ use Mockery;
 use Illuminate\Support\Collection;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('coverage:functional')]
 class BookshelfModelTest extends TestCase
 {
     use MockeryPHPUnitIntegration;

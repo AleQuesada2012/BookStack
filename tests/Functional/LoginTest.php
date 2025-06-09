@@ -6,6 +6,9 @@ use Tests\TestCase;
 use \BookStack\Users\Models\User;
 
 
+use PHPUnit\Framework\Attributes\Group;
+
+#[Group('coverage:functional')]
 class LoginTest extends TestCase {
 
     public function test_login_fails() {

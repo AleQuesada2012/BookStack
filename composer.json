@@ -72,6 +72,7 @@
         "lint": "phpcs",
         "test": "phpunit",
         "t-reset": "@php artisan test --recreate-databases",
+        "coverage:functional": "bin/coverage.sh coverage:functional",
         "build-licenses": [
             "@php ./dev/licensing/gen-js-licenses",
             "@php ./dev/licensing/gen-php-licenses"
