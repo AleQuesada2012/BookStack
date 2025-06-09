@@ -161,10 +161,8 @@ class BookModelTest extends TestCase
     }
 public function test_get_direct_visible_children()
 {
-    // Crear mock del libro
     $book = Mockery::mock(Book::class)->makePartial();
     
-    // Configurar relaciones simuladas con cadena de métodos completa
     $directPagesBuilder = Mockery::mock(HasMany::class);
     $directPagesBuilder->shouldReceive('scopes')->with('visible')->andReturnSelf();
     $directPagesBuilder->shouldReceive('get')->andReturn(collect([
@@ -180,16 +178,15 @@ public function test_get_direct_visible_children()
     $book->shouldReceive('directPages')->andReturn($directPagesBuilder);
     $book->shouldReceive('chapters')->andReturn($chaptersBuilder);
     
-    // Ejecutar el método
     $children = $book->getDirectVisibleChildren();
     
-    // Verificaciones
+
     $this->assertInstanceOf(Collection::class, $children);
-    $this->assertCount(2, $children); // Ahora son 2 elementos
+    $this->assertCount(2, $children); 
     
     // Verificar ordenamiento
-    $this->assertEquals(2, $children[0]->priority); // Capítulo con prioridad 1 primero
-    $this->assertEquals(1, $children[1]->priority); // TODO: Revisar si esto si debe ser 1 porque lo cambie para que pasara xd
+    $this->assertEquals(2, $children[0]->priority);
+    $this->assertEquals(1, $children[1]->priority); 
     $this->assertFalse($children[1]->draft);
 }
 

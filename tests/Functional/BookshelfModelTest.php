@@ -161,43 +161,7 @@ class BookshelfModelTest extends TestCase
         
         $shelf->appendBook($book);
     }
-/*
 
-TODO: Arreglar caso o eliminarlo
-public function test_get_by_slug()
-{
-    // 1. Crear un mock de Bookshelf válido
-    $mockShelf = Mockery::mock(Bookshelf::class)->makePartial();
-    $mockShelf->shouldReceive('getAttribute')->with('slug')->andReturn('test-shelf');
-    
-    // 2. Mock del Query Builder con el scope visible
-    $mockQuery = Mockery::mock(\Illuminate\Database\Eloquent\Builder::class);
-    
-    // Configurar la cadena de métodos
-    $mockQuery->shouldReceive('visible')
-        ->andReturnSelf(); // Devuelve el mismo query builder
-        
-    $mockQuery->shouldReceive('where')
-        ->with('slug', '=', 'test-shelf')
-        ->andReturnSelf();
-        
-    $mockQuery->shouldReceive('firstOrFail')
-        ->andReturn($mockShelf);
-
-    // 3. Mock de Bookshelf con el método newQuery sobrescrito
-    $mockBookshelf = Mockery::mock(Bookshelf::class . '[newQuery]');
-    $mockBookshelf->shouldReceive('newQuery')
-        ->andReturn($mockQuery);
-    
-    // 4. Llamar al método estático
-    $foundShelf = $mockBookshelf::getBySlug('test-shelf');
-    
-    // 5. Verificaciones
-    $this->assertInstanceOf(Bookshelf::class, $foundShelf);
-    $this->assertEquals('test-shelf', $foundShelf->slug);
-}
-
-*/
     public function test_fillable_properties()
     {
         $shelf = new Bookshelf();
